@@ -9,15 +9,7 @@ class Client extends Model
 {
     //
     protected $table = "clients";
+    //dddd
 
-    public function store(Request $request){
-
-        $client = new Client();
-
-        $client->name = 'valeron';
-
-        $client->phone = '+79654701276';
-
-    }
 
 }

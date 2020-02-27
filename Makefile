@@ -43,6 +43,10 @@ ssh-supervisord:
 ssh-mysql:
 	@docker-compose $(project) exec mysql bash
 
+ssh-nodejs:
+	@docker-compose $(project) exec nodejs bash
+
+
 exec:
 	@docker-compose $(project) exec $(optionT) laravel $$cmd
 
@@ -64,8 +68,14 @@ composer-install-prod:
 composer-install:
 	@make exec cmd="composer install"
 
+composer-require:
+	@make exec cmd="composer require laravel/ui --dev"
+
 composer-update:
 	@make exec cmd="composer update"
+
+npm-install:
+	@make exec cmd="npm install"
 
 info:
 	@make exec cmd="php artisan --version"

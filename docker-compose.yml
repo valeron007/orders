@@ -54,6 +54,21 @@ services:
     links:
       - mysql
 
+  nodejs:
+    image: nodejs
+    ports:
+      - "9200:8190"
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    command: npm run dev
+    container_name: nodejs
+    links:
+      - laravel
+    volumes:
+      - ./resources:/var/www/html/resources
+      - ./node_modules:/var/www/html/node_modules
+
   mysql:
     image: mysql:8.0
     container_name: mysql
@@ -66,4 +81,5 @@ services:
     volumes:
       - ./storage/mysql-data:/var/lib/mysql
       - ./docker/dev/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+
 

@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('test/', 'TestController@example');
+
+
+Route::get('orders/', 'OrderController@index');
+
