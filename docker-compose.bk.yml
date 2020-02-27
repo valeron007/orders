@@ -1,0 +1,70 @@
+version: '3'
+
+services:
+
+    laravel:
+      image: laravel:latest
+      build:
+        context: .
+        args:
+          - "BUILD_ARGUMENT_ENV=dev"
+          - "BUILD_ARGUMENT_DEBUG_ENABLED=false"
+        dockerfile: ./Dockerfile
+      container_name: laravel
+      expose:
+        - "80"
+        - "443"
+      ports:
+        - "8090:80"
+        - "4043:443"
+      volumes:
+        - .:/var/www/html
+      depends_on:
+        - mysql
+      links:
+        - mysql
+
+    supervisord:
+      image: laravel:latest
+      build:
+        context: .
+        args:
+          - "BUILD_ARGUMENT_ENV=dev"
+          - "BUILD_ARGUMENT_DEBUG_ENABLED=false"
+        dockerfile: ./Dockerfile
+      container_name: supervisord
+      user: root
+      depends_on:
+        - mysql
+      links:
+        - mysql
+      command: ["/usr/bin/supervisord"]
+
+    mysql:
+      image: mysql:8.0
+      container_name: mysql
+      command: --default-authentication-plugin=mysql_native_password
+      environment:
+        - MYSQL_ROOT_PASSWORD=rfk,fcf
+        - MYSQL_DATABASE=laravel
+      ports:
+        - "33061:3306"
+      volumes:
+        - ./storage/mysql-data:/var/lib/mysql
+        - ./docker/dev/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+
+    phpmyadmin:
+      depends_on:
+        - mysql
+      image: phpmyadmin/phpmyadmin
+      restart: always
+      ports:
+      - '8100:80'
+      environment:
+        PMA_HOST: mysql
+        MYSQL_USER: root
+        MYSQL_ROOT_PASSWORD: rfk,fcf
+      links:
+        - db: mysql
+      networks:
+        - default
