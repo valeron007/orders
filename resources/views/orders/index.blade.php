@@ -7,8 +7,17 @@
 
 </head>
 <body>
-    <h1>Main</h1>
-    <h2>First</h2>
+    <h1>Оформите заказ</h1>
+
+    <form method="POST" action="#">
+        @csrf
+        <label>Ввдите имя пользователя</label><br>
+        <input type="text" name="client"><br>
+        <label>Ввдите номер телефона пользователя</label><br>
+        <input type="tel" name="phone"><br>
+
+        <input type="submit" name="оформить заказ" value="Оформить заказ">
+    </form>
 
     <script src="{{ asset('js/app.js')}}"></script>
 </body>
