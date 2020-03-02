@@ -21,28 +21,36 @@ class CreateClientsTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('tarifs', function (Blueprint $table) {
+            $table->bigIncrements('id')->unique();
+            $table->string('name', 100)->unique();
+            $table->string('description', 150);
+            $table->float('price');
+
+            $table->timestamps();
+        });
+
         Schema::create('orders', function (Blueprint $table) {
-            $table->bigIncrements('id')->unique();;
+            $table->bigIncrements('id')->unique();
             $table->string('address', 100);
-            $table->dateTime('date_order');
             $table->dateTime('date_delivery');
             $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('tarif_id');
+            $table->double('price');
+
+
             $table->foreign('client_id')
                 ->references('id')
                 ->on('clients')
                 ->onDelete('cascade');
+            $table->foreign('tarif_id')
+                ->references('id')
+                ->on('tarifs');
             $table->timestamps();
         });
 
 
-        Schema::create('tarifs', function (Blueprint $table) {
-            $table->bigIncrements('id')->unique();;
-            $table->string('name', 100)->unique();
-            $table->string('description', 150);
-            $table->float('price');
-            $table->foreign('id')->references('id')->on('orders');
-            $table->timestamps();
-        });
+
     }
 
     /**

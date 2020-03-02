@@ -20,3 +20,4 @@ Route::get('test/', 'TestController@example');
 
 Route::get('orders/', 'OrderController@index');
 
+Route::post('order/create', 'OrderController@create');

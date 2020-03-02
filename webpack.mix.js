@@ -12,6 +12,17 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js(['resources/js/app.js', 'node_modules/jquery/dist/jquery.js', 'node_modules/bootstrap/dist/js/bootstrap.js'], 'public/js')
+
+mix.autoload({
+    'jquery': ['$', 'window.jQuery', 'jQuery'],
+    'vue': ['Vue','window.Vue'],
+    'moment': ['moment','window.moment'],
+});
+
+mix.js(['resources/js/app.js',
+    'node_modules/jquery/dist/jquery.js',
+    'node_modules/bootstrap-datepicker/js/bootstrap-datepicker.js',
+    'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js'
+], 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
 
