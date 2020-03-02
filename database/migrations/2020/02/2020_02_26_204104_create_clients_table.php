@@ -49,7 +49,19 @@ class CreateClientsTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('addresses', function (Blueprint $table) {
+            $table->bigIncrements('id')->unique();
+            $table->string('address', 100)->unique();
+        });
 
+        Schema::create('tarif_adresses', function (Blueprint $table) {
+            $table->unsignedBigInteger('tarif_id')->unsigned();
+            $table->unsignedBigInteger('address_id')->unsigned();
+            $table->foreign('tarif_id')->references('id')->on('tarifs')
+                ->onDelete('cascade');
+            $table->foreign('address_id')->references('id')->on('addresses')
+                ->onDelete('cascade');
+        });
 
     }
 

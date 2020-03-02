@@ -40,12 +40,8 @@ $('#receive-order').click(function (e) {
 
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
-        // processData: false,
-        // contentType: false,
         type: 'POST',
-        // headers: {
-        //     'X-CSRF-TOKEN': token
-        // },
+
         url: 'order/create',
         data: {
             "_token":token,
