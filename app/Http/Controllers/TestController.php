@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Client as client;
 use App\Tarifs as tarif;
 use Illuminate\Support\Facades\DB;
-
+use App\Adress as adress;
 
 class TestController extends Controller
 {
@@ -40,6 +40,12 @@ class TestController extends Controller
 //        $tar->save();
 
 //        DB::query("TRUNCATE TABLE tarifs");
+        $adres = new adress();
+//        $adres->find(1)->tarifs()->orderBy('name');
+        $adres->find(1)->tarifs;
+
+        var_dump($adres);
+        exit;
 
         return "hello";
     }

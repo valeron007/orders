@@ -32,12 +32,12 @@ class AddressesTarifs extends Migration
         $data = [];
         for ($i = 0; $i < 11; $i++){
             $data[] = [
-                'tarif_id' => $addresses_tarifs[$i][0],
-                'address_id' => $addresses_tarifs[$i][1]
+                'tarifs_id' => $addresses_tarifs[$i][0],
+                'adress_id' => $addresses_tarifs[$i][1]
             ];
         }
 
-        DB::table('tarif_adresses')->insert($data);
+        DB::table('tarif_adress')->insert($data);
 
     }
 
@@ -49,6 +49,6 @@ class AddressesTarifs extends Migration
     public function down()
     {
         //
-        DB::table('tarif_adresses')->delete();
+        DB::table('tarif_adress')->delete();
     }
 }

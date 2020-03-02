@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Adresses;
+use App\Adress;
 
 class Addresses extends Migration
 {
@@ -31,11 +31,11 @@ class Addresses extends Migration
         $data = [];
         for ($i = 0; $i < 11; $i++){
             $data[] = [
-                'address' => $addresses[$i]
+                'adress' => $addresses[$i]
             ];
         }
 
-        DB::table('addresses')->insert($data);
+        DB::table('adress')->insert($data);
     }
 
     /**
@@ -46,6 +46,6 @@ class Addresses extends Migration
     public function down()
     {
         //
-        DB::table('addresses')->delete();
+        DB::table('adress')->delete();
     }
 }

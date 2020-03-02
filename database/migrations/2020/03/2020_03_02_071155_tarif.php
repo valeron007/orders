@@ -40,6 +40,6 @@ class Tarif extends Migration
     public function down()
     {
         //
-        DB::table('tarifs')->delete();
+        DB::table('tarif')->delete();
     }
 }

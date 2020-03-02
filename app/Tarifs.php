@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Tarifs extends Model
 {
     //
-    protected $table = "tarifs";
+    protected $table = "tarif";
 
     public function addresses()
     {
-        return $this->belongsToMany('App\Adresses', 'tarif_adresses', 'tarif_id', 'address_id');
+        return $this->belongsToMany('App\Adress', 'tarif_adress')->withPivot('tarifs_id', 'adress_id');
     }
 
 }

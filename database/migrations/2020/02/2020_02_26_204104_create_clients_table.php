@@ -21,7 +21,7 @@ class CreateClientsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('tarifs', function (Blueprint $table) {
+        Schema::create('tarif', function (Blueprint $table) {
             $table->bigIncrements('id')->unique();
             $table->string('name', 100)->unique();
             $table->string('description', 150);
@@ -35,7 +35,7 @@ class CreateClientsTable extends Migration
             $table->string('address', 100);
             $table->dateTime('date_delivery');
             $table->unsignedBigInteger('client_id');
-            $table->unsignedBigInteger('tarif_id');
+            $table->unsignedBigInteger('tarifs_id');
             $table->double('price');
 
 
@@ -43,23 +43,23 @@ class CreateClientsTable extends Migration
                 ->references('id')
                 ->on('clients')
                 ->onDelete('cascade');
-            $table->foreign('tarif_id')
+            $table->foreign('tarifs_id')
                 ->references('id')
-                ->on('tarifs');
+                ->on('tarif');
             $table->timestamps();
         });
 
-        Schema::create('addresses', function (Blueprint $table) {
+        Schema::create('adress', function (Blueprint $table) {
             $table->bigIncrements('id')->unique();
-            $table->string('address', 100)->unique();
+            $table->string('adress', 100)->unique();
         });
 
-        Schema::create('tarif_adresses', function (Blueprint $table) {
-            $table->unsignedBigInteger('tarif_id')->unsigned();
-            $table->unsignedBigInteger('address_id')->unsigned();
-            $table->foreign('tarif_id')->references('id')->on('tarifs')
+        Schema::create('tarif_adress', function (Blueprint $table) {
+            $table->unsignedBigInteger('tarifs_id')->unsigned();
+            $table->unsignedBigInteger('adress_id')->unsigned();
+            $table->foreign('tarifs_id')->references('id')->on('tarif')
                 ->onDelete('cascade');
-            $table->foreign('address_id')->references('id')->on('addresses')
+            $table->foreign('adress_id')->references('id')->on('adress')
                 ->onDelete('cascade');
         });
 
@@ -74,6 +74,11 @@ class CreateClientsTable extends Migration
     {
         Schema::dropIfExists('clients');
         Schema::dropIfExists('orders');
-        Schema::dropIfExists('tarifs');
+        Schema::dropIfExists('tarif');
+        Schema::dropIfExists('adress');
+        Schema::dropIfExists('tarif_adress');
+
+
+
     }
 }
