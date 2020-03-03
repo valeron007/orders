@@ -4,7 +4,25 @@
 
 1. Клонировать репозиторий:
 
-git clone 
+git clone git@github.com:valeron007/orders.git
+
+git clone https://github.com/valeron007/orders.git
+
+2. Для сборки проекта перейти в корень проекта и выполнить:
+
+docker-compose build
+
+3. Для запуска всех контейнеров, выполнить:
+docker-compose build
+
+4. Для выполнения миграций, запустить:
+make migrate
+
+5. Для пересоздания миграций:
+make drop-migrate
+
+В случае чего пишите помогу.
+
 
 
 
