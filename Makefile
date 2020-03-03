@@ -107,6 +107,10 @@ migrate:
 seed:
 	@make exec cmd="php artisan db:seed --force"
 
+seed-orders:
+	@make exec cmd="php artisan db:seed --class=OrdersSeeder"
+
+
 phpunit:
 	@make exec cmd="./vendor/bin/phpunit -c phpunit.xml --coverage-html reports/coverage --coverage-clover reports/clover.xml --log-junit reports/junit.xml"
 

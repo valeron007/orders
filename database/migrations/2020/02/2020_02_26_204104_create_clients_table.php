@@ -14,11 +14,15 @@ class CreateClientsTable extends Migration
     public function up()
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->bigIncrements('id')->unique();;
-            $table->string('name')->unique();
-            $table->string('phone', 12)->unique();
+            $table->bigIncrements('id')->unique();
 
+            $table->string('name');
+            $table->string('phone', 12);
+//            $table->primary(array('name', 'phone'));
+
+            $table->unique(['name', 'phone']);
             $table->timestamps();
+
         });
 
         Schema::create('tarif', function (Blueprint $table) {
@@ -32,12 +36,11 @@ class CreateClientsTable extends Migration
 
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id')->unique();
-            $table->string('address', 100);
+            $table->unsignedBigInteger('address_id');
             $table->dateTime('date_delivery');
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('tarifs_id');
             $table->double('price');
-
 
             $table->foreign('client_id')
                 ->references('id')

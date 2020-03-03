@@ -7,6 +7,9 @@ use App\Orders;
 use Illuminate\Http\Request;
 use App\Tarifs;
 use App\Client;
+use Illuminate\Support\Facades\DB;
+use App\Adress as adress;
+use App\Tarifs as tarif;
 
 class OrderController extends Controller
 {
@@ -22,7 +25,9 @@ class OrderController extends Controller
         $client = new Client();
         $client_form = $request->post('order');
 
-        $client_exists = Client::where('name', '=', $client_form['name'])->first();
+        $client_exists = Client::where('phone', '=', $client_form['phone'])
+            ->where('name', '=', $client_form['name'])
+            ->first();
 
         if ($client_exists == null){
             $client->name = $client_form['name'];
@@ -33,14 +38,35 @@ class OrderController extends Controller
         }
 
         $order = new Orders();
-        $order->address = $client_form['address'];
+        $order->address_id = $client_form['adress'];
         $order->date_delivery = $client_form['date_livery'];
         $order->client_id = $client->id;
-        $order->tarif_id = $client_form['tarif'];
+        $order->price = $client_form['price'];
+
+        $order->tarifs_id = $client_form['tarif'];
         $order->save();
 
-        exit;
-        //return 'ww';
+        return json_encode(['success' => 'Заказ успешно создан']);
+    }
+
+    public function getAddresses(Request $request){
+        $id = $request->post('id');
+
+        $data = DB::table('tarif')
+            ->join('tarif_adress', 'tarif_adress.tarifs_id', '=', 'tarif.id')
+            ->join('adress', 'adress.id', '=', 'tarif_adress.adress_id')
+            ->where('tarif.id', '=', $id)
+            ->select('adress.adress', 'adress.id')
+            ->get()->toArray();
+        $result = [];
+        foreach ($data as $d){
+            $result[] = [
+                  'id' => $d->id,
+                   'name' => $d->adress
+            ];
+        }
+
+        return json_encode($result);
     }
 
 }

@@ -18,10 +18,10 @@
                                 <input type="tel" name="phone" class="form-control" id="exampleInputPhone" placeholder="Phone">
                             </div>
 
-                            <div class="form-group">
-                                <label for="exampleInputAddress">Address</label>
-                                <input type="text" name="address" class="form-control" id="exampleInputAddress" placeholder="Address">
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label for="exampleInputAddress">Address</label>--}}
+{{--                                <input type="text" name="address" class="form-control" id="exampleInputAddress" placeholder="Address">--}}
+{{--                            </div>--}}
 
                             <div class="form-group">
                                 <label for="exampleInputPrice">Стоимость заказа</label>
@@ -36,6 +36,16 @@
                                     @endforeach
                                 </select>
                             </div>
+
+{{--                            <div class="form-group" id="adresses">--}}
+                            <div class="d-none form-group" id="adresses">
+                                <label for="exampleFormControlAdress">Выберите адрес</label>
+                                <select name="adress" class="form-control" id="exampleFormControlAdress">
+
+                                </select>
+                            </div>
+
+
 
                             <div class="form-group">
                                 <label for="datetimeorder">время доставки</label>

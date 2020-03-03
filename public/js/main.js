@@ -15,11 +15,6 @@ $('#receive-order').click(function (e) {
         return;
     }
 
-    if ($('#exampleInputAddress')[0].value == ''){
-        $('.error').css('display', 'block').text('Введите адрес');
-        return;
-    }
-
     if ($('#exampleInputPrice')[0].value == ''){
         $('.error').css('display', 'block').text('Введите стоимость заказа');
         return;
@@ -38,6 +33,8 @@ $('#receive-order').click(function (e) {
 
     data_form["tarif"] = $('#exampleFormControlTarif')[0].value.toString();
 
+    data_form['adress'] = $('#exampleFormControlAdress option:selected').val().toString();
+
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
         type: 'POST',
@@ -55,5 +52,39 @@ $('#receive-order').click(function (e) {
         },
         // dataType: 'json'
     });
+});
+
+$('#exampleFormControlTarif').click(function (e) {
+    var id = $(this).val();
+
+    // $('#exampleFormControlAdress').attr('tarif-id', id);
+
+    var token = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+        type: 'POST',
+
+        url: 'order/tarifs',
+        data: {
+            "_token":token,
+            "id":id
+        },
+        success: function (result) {
+
+            var adres = JSON.parse(result);
+            $('#exampleFormControlAdress').children('option').remove();
+            for (let i = 0; i < adres.length; i++){
+                let option = document.createElement("option");
+                option.text = adres[i].name;
+                $(option).val(adres[i].id);
+                $('#exampleFormControlAdress').append(option);
+            }
+            $('#adresses').removeClass('d-none');
+        },
+        error: function(error){
+            console.log(error);
+        },
+
+    });
+
 });
 
