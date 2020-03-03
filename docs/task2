@@ -1,0 +1,75 @@
+show databases;
+
+use laravel;
+
+select * from orders;
+
+# 1. Выбрать для каждого клиента количество заказов с ценой меньше 1000 количество больше 1000. (client_id, count1, count2)
+
+select clients.name, COUNT(orders.id)
+from clients
+join orders on orders.client_id = clients.id
+where orders.price < 1000
+GROUP BY clients.name
+HAVING COUNT(orders.id) > 1000;
+
+
+# 2 Выбрать три последний заказа клиента за ближайшую неделю ( id, client_id, price, created_at)
+
+select clients.name, clients.id, orders.price, orders.date_delivery
+from clients
+         join orders on orders.client_id = clients.id
+where clients.id = 3
+ORDER BY orders.date_delivery DESC LIMIT 3;
+
+# Выбрать для каждого клиента три последних заказа стоимостью больше 1000 ( id, client_id, price)
+# 3 запрос не доделал
+select orders.id, orders.price, orders.client_id
+from orders
+where orders.price > 1000
+ORDER BY orders.date_delivery, orders.client_id DESC;
+
+select orders.id, orders.price, orders.client_id
+from orders
+join clients on clients.id = orders.client_id
+ORDER BY orders.date_delivery, orders.client_id DESC;
+
+select clients.id, clients.name
+from clients
+where clients.id in (
+    select orders.client_id, orders.price
+    from orders
+    where orders.price > 100
+    ORDER BY orders.date_delivery ASC
+);
+
+select * from orders
+where orders.client_id =
+      ANY (select clients.id
+          from clients)
+and orders.price > 1000
+ORDER BY orders.client_id, orders.date_delivery  ASC;
+
+select * from clients
+where clients.id = ANY (
+    select orders.client_id
+    from orders
+    where orders.price > 1000 and orders.client_id = clients.id
+)
+ORDER BY clients.id;
+
+
+#4 Получить уникальный список телефонов клиентов отсортированных по имени клиента (phone).
+select * from clients
+ORDER BY clients.phone DESC;
+
+select distinct phone from clients
+ORDER BY clients.phone DESC;
+
+
+# А вообще можно нужно применить distinct
+
+
+
+
+

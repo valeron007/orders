@@ -44,7 +44,7 @@ class OrdersSeeder extends Seeder
         ];
         $data = [];
 
-        for ($i = 0; $i < 2000; $i++){
+        for ($i = 0; $i < 3000; $i++){
             $tarif = random_int(1,3);
             $index = array_rand($adresses[$tarif], 1);
             $data[] = [
@@ -52,7 +52,7 @@ class OrdersSeeder extends Seeder
                 'client_id' => random_int(1, 7),
                 'date_delivery' => $date[random_int(0,14)],
                 'tarifs_id' => $tarif,
-                'price' => random_int(100, 10000)
+                'price' => random_int(100, 900)
             ];
 
         }
